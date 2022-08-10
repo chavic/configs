@@ -11,16 +11,39 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-sensible'
 Plug 'junegunn/seoul256.vim'
+Plug 'preservim/nerdtree'
+Plug 'airblade/vim-gitgutter'
+Plug 'junegunn/gv.vim'
+Plug 'natebosch/dartlang-snippets'
+Plug 'leafgarland/typescript-vim'
+Plug 'rhysd/vim-grammarous'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'ryanoasis/vim-devicons'
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-surround'
+Plug 'scrooloose/nerdcommenter'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-projectionist'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'PhilRunninger/nerdtree-visual-selection'
 
 " GUI enhancements
 Plug 'itchyny/lightline.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'andymass/vim-matchup'
 Plug 'tomasiser/vim-code-dark'
+Plug 'sainnhe/gruvbox-material'
+Plug 'folke/lsp-colors.nvim'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'ryanoasis/vim-devicons'
 
 " Semantic language support
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'dart-lang/dart-vim-plugin'
 
 " Syntactic language support
 Plug 'cespare/vim-toml', {'branch': 'main'}
@@ -30,6 +53,11 @@ Plug 'rhysd/vim-clang-format'
 Plug 'fatih/vim-go'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
+
+" Snippets
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'natebosch/dartlang-snippets'
 
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
@@ -55,8 +83,8 @@ endif
 filetype plugin indent on
 set autoindent
 set hidden
-set nobackup
-set nowritebackup
+" set nobackup
+" set nowritebackup
 set cmdheight=2
 set updatetime=300
 set shortmess+=c
@@ -69,7 +97,19 @@ set showcmd
 set mouse=a
 set shortmess+=c
 set listchars=nbsp:¬,extends:»,precedes:«,trail:•
-" colorscheme codedark
+
+let g:codedark_conservative=1
+let g:codedark_italics=1
+let g:codedark_transparent=1
+colorscheme codedark
+hi Normal guibg=NONE ctermbg=NONE
+hi LineNr guibg=NONE ctermbg=NONE
+hi StatusLine guibg=NONE ctermbg=NONE
+hi EndOfBuffer guibg=NONE ctermbg=NONE
+hi NonText guibg=NONE ctermbg=NONE
+hi StatusLineNC guibg=NONE ctermbg=NONE
+hi VertSplit guibg=NONE ctermbg=NONE
+hi Directory guibg=NONE ctermbg=NONE
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
@@ -219,5 +259,23 @@ let g:lightline = {
       \ },
       \ }
 
-" Usefull keypapings
-:imap ii <Esc>
+nnoremap <leader>n :NERDTreeToggle<CR>
+nnoremap <leader>f :FZF<CR>
+
+nnoremap <leader>fe :CocCommand flutter.emulators <CR>
+nnoremap <leader>dw :below new output:///flutter-dev <CR>
+" Mapping selecting mappings
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
+
+" Insert mode completion
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
+" Auto commands
+autocmd VimEnter * TSEnable highlight
+autocmd VimEnter * TSEnable indent 
+autocmd VimEnter * TSEnable matchup
+autocmd VimEnter * TSEnable incremental_selection
